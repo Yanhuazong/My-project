@@ -51,7 +51,6 @@ export class AdminRubricComponent implements OnInit {
   delete(item: item): void {
     this.items = this.items.filter(h => h !== item);
     this.service.deleteItem(item.itemID).subscribe(res=>console.log(res));
-    console.log(item.itemID);
   }
   edit(item) {
     this.editItem = item;
@@ -113,7 +112,6 @@ export class AdminRubricComponent implements OnInit {
   getMaxOptionID(){
     this.service.getMaxOptionId()
     .subscribe(data=>this.maxOptionID=data);
-    console.log(this.maxOptionID);
     
   }
   createOption(attributeID,optionName,rank):void{
@@ -127,7 +125,6 @@ export class AdminRubricComponent implements OnInit {
    deleteOption(option: option): void {
     this.options = this.options.filter(h => h !== option);
     this.service.deleteOption(option.optionID).subscribe(res=>console.log(res));
-    console.log(option.optionID);
   }
   editOption(option) {
     this.editoption = option;

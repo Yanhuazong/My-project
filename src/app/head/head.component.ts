@@ -167,7 +167,6 @@ export class HeadComponent implements OnInit {
     });
     this.service.getThisComEvaComments(this.selectedThesis.thesisID,this.selectedFaculty.userID)
     .subscribe(data=>{this.thisComEvaComments=data;
-      console.log(this.thisComEvaComments);
     });
     this.thisComRatesThisThesis=this.thisComRates.filter(r=>r.thesisID==this.selectedThesis.thesisID);
   }

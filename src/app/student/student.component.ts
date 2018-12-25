@@ -90,7 +90,6 @@ export class StudentComponent implements OnInit {
           // replace the item in the items list with update from server
           const ix = thesis ? this.thisThesis.findIndex(h => h.thesisID === thesis.thesisID) : -1;
           if (ix > -1) { this.thisThesis[ix] = thesis; }
-          console.log(thesis);
         });
       this.editThisThesis = undefined;
       this.editThesis=false;

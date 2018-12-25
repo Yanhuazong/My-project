@@ -150,7 +150,6 @@ export class CommitteeEvaComponent implements OnInit {
           let avgRate={itemName:item,avgRate:r} as avgRate;
           this.avgRates.push(avgRate);
          })
-         console.log(this.avgRates);
     });
   }
   getFinalRates(){
@@ -172,7 +171,6 @@ export class CommitteeEvaComponent implements OnInit {
       if(this.loadedFinalRate.length==3){
         this.isReadyForFinalReview=true;
       }
-      console.log(this.loadedOtherComFinalRate);
     });
   }
   onSelectionChange(option, attribute, item) {
@@ -209,7 +207,6 @@ export class CommitteeEvaComponent implements OnInit {
     this.comments.push(newComment);
     this.commentID++;
     }
-    console.log(this.commentID);
   }
   getMaxEvaOptionId(){
     this.service.getMaxEvaOptionId().subscribe(data=>this.resultID=data);
