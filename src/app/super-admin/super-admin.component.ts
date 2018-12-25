@@ -95,12 +95,10 @@ export class SuperAdminComponent implements OnInit {
   changeRate(item,rate){
     let ix=this.thisComEvaComments.findIndex(c=>c.commentID==item.commentID);
     this.thisComEvaComments[ix].rate=rate;
-    console.log(this.thisComEvaComments[ix]);
   }
   changeComment(item,comment){
     let ix=this.thisComEvaComments.findIndex(c=>c.commentID==item.commentID);
     this.thisComEvaComments[ix].comment=comment;
-    console.log(this.thisComEvaComments[ix]);
   }
   changeFinalRate(thisfinalRate){
     this.thisComRatesThisThesis.rate=thisfinalRate;
