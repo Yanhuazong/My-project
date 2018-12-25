@@ -1,0 +1,18 @@
+<div class="content"> 
+    <div class="title">
+        <h2>Welcome to Purdue Thesis Evaluation System</h2>
+    </div>
+    <div class="form-container">
+        <form #formData='ngForm' (ngSubmit)="login(formData)">
+            <div *ngIf="service.isWrong" id="error">
+                Either email or password is not correct. 
+            </div>
+            <label>Email</label>
+            <input type="email" name="email" ngModel #email="ngModel" required>
+            <label>Password</label>              
+            <input type="password" name="password" ngModel #password="ngModel" required minlength="4" maxlength="30">
+            <button type="submit" [disabled]="!formData.valid">Log in</button>
+        </form>
+    </div>
+
+</div>

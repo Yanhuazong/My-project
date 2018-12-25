@@ -1,0 +1,109 @@
+<div class="content">
+  <h2>Overall trend of thesis grade</h2>
+  <div class="content-container">
+    <div class="row">
+      <div class="col-sm-6" id="innerContainer1">
+        <svg id="gradeTrend" class="line-chart" viewBox="0 0 400 300" perserveAspectRatio="xMinYMid"></svg>
+      </div>
+      <div class="col-sm-6">
+        <svg id="raceTrend" class="line-chart" viewBox="0 0 400 300" perserveAspectRatio="xMinYMid"></svg>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+          <svg id="genderTrend" class="line-chart" viewBox="0 0 400 300" perserveAspectRatio="xMinYMid"></svg>
+        </div>
+    </div>
+  </div>
+  <h2>Check the evaluation result of a professor</h2>
+  <div class="select-container">
+    <label>Select a professor to view the trend of his/her evaluation results</label><br/>
+    <select name="faculty" id="faculty" ngModel #faculty="ngModel" required (change)="getSelectedFaculty(faculty);">
+        <option value="">
+            Please select a professor
+        </option>
+        <option *ngFor="let faculty of faculties" [ngValue]="faculty">
+            {{ faculty.firstName }}&nbsp;{{ faculty.lastName }}
+        </option>
+    </select> 
+  </div>
+  <div class="content-container" *ngIf="faculty.value">
+    <div *ngIf="!hasNoRating">
+      <div class="row">
+          <div class="col-sm-6">
+            <svg id="rateTrend" class="line-chart" viewBox="0 0 400 300" perserveAspectRatio="xMinYMid"></svg>
+          </div>
+          <div class="col-sm-6">
+            <svg id="thisRaceTrend" class="line-chart" viewBox="0 0 400 300" perserveAspectRatio="xMinYMid"></svg>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-sm-6">
+            <svg id="thisGenderTrend" class="line-chart" viewBox="0 0 400 300" perserveAspectRatio="xMinYMid"></svg>
+          </div>
+          <div class="col-sm-6">
+            <svg id="isChairTrend" class="line-chart" viewBox="0 0 400 300" perserveAspectRatio="xMinYMid"></svg>
+          </div>
+      </div>
+    </div>
+    <div *ngIf="hasNoRating">
+          This professor has not done any thesis evaluation yet!
+    </div>
+  </div>
+  <div class="select-container">
+    <label>Select a thesis this prodessor has reviewed to see his/her evaluation results</label><br/>
+    <select name="thesis" id="thesis" ngModel #thesis="ngModel" required (change)="getSelectedThesis(thesis);">
+        <option value="">
+            Please select a thesis
+        </option>
+        <option *ngFor="let thesis of thisComTheses" [ngValue]="thesis">
+            {{ thesis.thesisTitle }}
+        </option>
+    </select>
+    <div class="content-container" *ngIf="thesis.value">
+      <ul class="items">
+        <li *ngFor="let item of thisComEvaComments">
+          <div class="title">{{item.itemName}}</div>
+          <ol class="attributes">
+            <li *ngFor="let result of thisComEvaOptions" [hidden]="result.itemName!==item.itemName">
+              <div class="strong">{{result.attributeName}}</div>
+              <span style="font-weight:normal;">{{result.optionSelected}}</span>
+            </li>
+          </ol>
+          <div class="comments">
+            <div class="strong">Overall rating for this category</div>
+              <input name="rate-{{item}}" style="width:100%;" type="range" min="1" max="5" steps="1" value="{{item.rate}}" style="width:100%;margin-top:30px;" disabled>
+              <div class="rangelabel">
+                  <span class="left">1</span>
+                  <span class="middle">3</span>
+                  <span class="right">5</span>
+              </div>
+          </div>
+          <div class="comments">
+            <div class="strong">Comments:</div>
+              <div class="comment">{{item.comment}}</div>
+          </div>
+        </li>
+    </ul>
+      <div class="finalRate">
+        <div class="title">Overall rating of this thesis</div>
+        <input name="thisfinalRate" style="width:100%;" type="range" min="1" max="5" steps="1" value="{{thisComRatesThisThesis.rate}}" style="width:100%;margin-top:30px;" disabled>
+        <div class="rangelabel">
+            <span class="left">1</span>
+            <span class="middle">3</span>
+            <span class="right">5</span>
+        </div>
+      </div>
+      <div *ngIf="isChair">
+          <div class="content-container">
+            <div class="strong">This professor served as committee chair. This the final Results given:</div>
+            <span class="strong"> Grade: </span>{{this.selectedThesis.grade}} <br/>
+            <div class="strong">Comments: </div>
+              <div class="comment">
+                {{this.selectedThesis.evaComment}}
+              </div>
+          </div>
+      </div>
+    </div> 
+  </div>
+</div>

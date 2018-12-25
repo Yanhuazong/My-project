@@ -1,0 +1,80 @@
+<div class="content">
+  <div class="head">
+    <h3>Select a thesis that a professor reviewed to make necessary changes to the evaluation results</h3>
+  </div>
+  <div class="select-container">
+      <select name="faculty" id="faculty" ngModel #faculty="ngModel" required (change)="getSelectedFaculty(faculty);">
+          <option value="">
+              Please select a professor
+          </option>
+          <option *ngFor="let faculty of faculties" [ngValue]="faculty">
+              {{ faculty.firstName }}&nbsp;{{ faculty.lastName }}
+          </option>
+      </select> 
+      <select name="thesis" id="thesis" ngModel #thesis="ngModel" required (change)="getSelectedThesis(thesis);">
+          <option value="">
+              Please select a thesis
+          </option>
+          <option *ngFor="let thesis of thisComTheses" [ngValue]="thesis">
+              {{ thesis.thesisTitle }}
+          </option>
+      </select>
+  </div>
+  <div class="content-container" *ngIf="thesis.value">
+      <form #formData='ngForm'>
+          <ul class="items">
+              <li *ngFor="let item of thisComEvaComments">
+                  <div class="title">{{item.itemName}}</div>
+                  <ol class="attributes">
+                      <li *ngFor="let result of thisComEvaOptions" [hidden]="result.itemName!==item.itemName">
+                          <div class="strong">{{result.attributeName}}</div>
+                          <ul class="options">
+                              <li *ngFor="let option of options | sort: 'rank'" [hidden]="option.attributeID!==result.attributeName">
+                                  <input type="radio" name="option-{{result.attributeName}}-{{item.itemName}}" [checked]="option.optionName===result.optionSelected&&option.attributeID===result.attributeName" (change)="changeOption(option,result)">&nbsp;{{option.optionName}}
+                              </li>
+                          </ul>
+                      </li>
+                  </ol>
+                    <div class="comments">
+                    <div class="strong">Overall rating for this category</div>
+                        <input name="rate-{{item.itemName}}" id="rate" #rate type="range" min="1" max="5" steps="1" value="{{item.rate}}" (change)="changeRate(item,rate.value)">
+                        <div class="rangelabel">
+                            <span class="left">1</span>
+                            <span class="middle">3</span>
+                            <span class="right">5</span>
+                        </div>
+                    </div>
+                    <div class="comments">
+                    <div class="strong">Comments:</div>
+                        <textarea #comment name="comment-{{item.itemName}}" rows="3" style="width:100%;" value="{{item.comment}}" (blur)="changeComment(item,comment.value)" (keyup.enter)="changeComment(item,comment.value)"></textarea>
+                    </div>
+                </li>
+            </ul>
+        <div class="finalRate">
+          <div class="title">Overall rating of this thesis</div>
+          <input name="thisfinalRate" #thisfinalRate type="range" min="1" max="5" steps="1" value="{{thisComRatesThisThesis.rate}}" (change)="changeFinalRate(thisfinalRate.value)">
+          <div class="rangelabel">
+              <span class="left">1</span>
+              <span class="middle">3</span>
+              <span class="right">5</span>
+          </div>
+        </div>
+        <div *ngIf="isChair">
+            <div class="content-container">
+              <div class="strong">This professor served as committee chair. This is the final Results given:</div>
+                <label class="strong">Thesis Grade:</label>&nbsp;
+                <select #grade name="grade" [(ngModel)]="selectedThesis.grade" style="width:100%;">
+                    <option *ngFor="let g of grades" [value]="g.id">{{g.name}}</option>
+                </select>
+              <div class="strong">Comments: </div>
+              <textarea #finalcomment name="finalcomment" rows="3" style="width:100%;" value="{{selectedThesis.evaComment}}" (blur)="changeFinalComment(finalcomment.value)" (keyup.enter)="changeFinalComment(finalcomment.value)"></textarea>
+            </div>
+      </div> 
+      <input type="submit" value="submit" (click)="onClick();">
+      <label class="message" *ngIf="message"> 
+      Results has been changed!
+      </label>
+      </form>
+  </div>
+  
+</div>

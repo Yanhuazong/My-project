@@ -1,0 +1,35 @@
+<div class="content">
+  <div *ngIf="committeeService.isThesisExist">
+    <div *ngIf="committeeService.isThesisReviewed">
+    <h3>Thesises reviewed</h3>
+      <ul *ngFor="let thesis of committeeService.comThesisesReviewed; let i=index">
+        <a [routerLink]="['/committee',thesis.thesisID]">
+        <li>
+          <span style="color:teal;">{{i+1}}</span>
+          <span>{{thesis.thesisTitle}}</span>
+          <span style="color:teal;">Your role:</span>
+          <span *ngIf="thesis.comChairID==comID">Committee Chair</span>
+          <span *ngIf="thesis.comChairID!=comID">Committee Member</span>
+        </li> 
+      </a> 
+      </ul>
+    </div> 
+    <div *ngIf="committeeService.isThesisToReview">
+      <h3>Thesises to review</h3>
+      <ul *ngFor="let thesis of committeeService.comThesisesToReview; let i=index">
+        <a [routerLink]="['/committee',thesis.thesisID]">
+        <li>
+          <span style="color:teal;">{{i+1}}</span>
+          <span>{{thesis.thesisTitle}}</span>
+          <span style="color:teal;">Your role:</span>
+          <span *ngIf="thesis.comChairID==comID">Committee Chair</span>
+          <span *ngIf="thesis.comChairID!=comID">Committee Member</span>
+        </li>
+      </a>  
+      </ul>
+    </div>
+  </div>
+  <div *ngIf="!committeeService.isThesisExist">
+    <h3>You have no thesises reviewed or to review.</h3>  
+  </div> 
+</div>

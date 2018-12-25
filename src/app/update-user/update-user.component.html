@@ -1,0 +1,40 @@
+<div class="content">
+  <div class="goback">
+      <button class="btn" (click)="goback()">Go back</button>
+  </div> 
+  <form #formData='ngForm' (ngSubmit)="updateUser(formData)">
+      <label for="firstname">First Name</label>
+      <input type="text" [(ngModel)]="thisUser.firstName" name="firstname" id="firstname">
+      <label for="lastname">Last Name</label>
+      <input type="text"[(ngModel)]="thisUser.lastName" name="lastname" id="lastname">
+      <label for="gender">Gender</label>
+      <select name="gender" [(ngModel)]="thisUser.gender" id="gender">
+        <option value="" disabled>Choose a gender</option>
+        <option value="female">Female</option>
+        <option value="male">Male</option>
+      </select> 
+      <label for="race">Race</label>
+      <select name="race" [(ngModel)]="thisUser.race"  id="race">
+        <option value="" disabled>Choose a race</option>
+        <option value="American Indian or Alaskan Native">American Indian or Alaskan Native</option>
+        <option value="Asian">Asian</option>
+        <option value="Black or African American">Black or African American</option>
+        <option value="Native Hawaiian or Other Pacific Islander">Native Hawaiian or Other Pacific Islander</option>
+        <option value="White">White</option>
+      </select> 
+      <label for="email">Email</label>
+      <input type="email" [(ngModel)]="thisUser.email"  name="email" id="email">
+      <label for="password">Password</label>
+      <input type="password" ngModel name="password" id="password" #password="ngModel" minlength="4" maxlength="30">
+      <label for="usertype">User Type</label>
+      <select name="usertype" [(ngModel)]="thisUser.userType" id="usertype">
+          <option value="" disabled>Choose a user type</option>
+          <option value="student">Student</option>
+          <option value="faculty">Faculty</option>
+          <option value="departmentHead">Department Head</option>
+          <option value="admin">Admin</option>
+          <option value="superAdmin">Super Admin</option>
+      </select> 
+      <input type="submit" [disabled]="!formData.valid" value="submit">
+    </form>
+</div>

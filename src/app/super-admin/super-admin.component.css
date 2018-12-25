@@ -1,0 +1,81 @@
+.content{
+    padding: 60px 16px;
+    height: 100%;
+    margin: auto;
+    max-width: 800px;
+}
+h3{
+    margin:20px;
+    text-align:center;
+}
+.select-container{
+    width:100%;
+    margin:20px auto;
+    text-align:center;
+}
+#thesis{
+    margin-left:10px;
+}
+.content-container{
+    box-shadow: 0 0 20px #AFADAD;
+    padding:20px;
+    margin-top:30px;
+    margin-bottom:30px;
+    text-align:left;
+    width:100%;
+}
+.items{
+    list-style-type: none;
+    padding:0;
+}
+.options{
+    list-style-type: none;
+}
+.options li{
+    margin:0px;
+    margin-left:-40px;
+    font-weight:normal;
+    padding:0px;
+}
+.comment{
+    font-weight:bold;
+}
+.rangelabel{
+    text-align:center;
+    width:100%;
+    font-weight:bold;
+}
+.left{
+    float:left;
+}
+.right{
+    float:right;
+}
+.title{
+    background-color:#63B9AB;
+    color:white;
+    margin-top:15px;
+    font-weight:bold;
+    padding:3px;
+}
+.strong{
+    font-weight:bold;
+    margin-top:15px;
+}
+.comment{
+    margin-top:10px;
+    margin-top:10px;
+    padding:10px;
+    border:1px solid #AFADAD;
+}
+label{
+    font-weight:bold;
+}
+input[type=range]{
+    margin-top:30px;
+    width:100%;
+}
+.message{
+    margin-left:10px;
+    color:teal;
+}

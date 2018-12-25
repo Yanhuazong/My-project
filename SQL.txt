@@ -1,0 +1,62 @@
+CREATE TABLE users(
+    userID varChar(50) PRIMARY KEY,
+    firstName    varChar(50),
+    lastName    varChar(50),
+    gender    varChar(50),
+    race    varChar(50),
+    email    varChar(50),
+    password    varChar(255),
+    userType    varChar(50)
+    );
+
+CREATE TABLE items(
+    itemID INT PRIMARY KEY,
+    itemName    varChar(255)
+    );
+CREATE TABLE attributes(
+    attributeID INT PRIMARY KEY,
+    itemID INT REFERENCES items(itemID),
+    attribute    varChar(255),
+    );
+CREATE TABLE options(
+    optionID INT PRIMARY KEY,
+    attributeID INT REFERENCES attributes(attributeID),
+    optionName    varChar(255),
+	rank INT
+    );
+CREATE TABLE thesis(
+    thesisID INT PRIMARY KEY,
+    stuID varChar(50),
+    thesisTitle varChar(255),
+    comChairID    varChar(50),
+    comChairFirstName    varChar(50),
+    comChairLastName    varChar(50),
+    comMember1ID    varChar(50),
+    comMember1FirstName    varChar(50),
+    comMember1LastName    varChar(50),
+    comMembeComr2ID    varChar(50),
+    comMembeComr2FirstName    varChar(50),
+    comMembeComr2LastName    varChar(50),
+    defenseDate varChar(50),
+    evaResult varchar(255)
+    );
+CREATE TABLE evaresult(
+    resultID INT PRIMARY KEY,
+    attributeID INT REFERENCES attributes(attributeID),
+    thesisID INT REFERENCES thesis(thesisID),
+    comID INT,
+    optionSelected    INT REFERENCES options(optionID)
+    );
+CREATE TABLE evacomment(
+    commentID INT PRIMARY KEY,
+    itemID INT REFERENCES items(itemID),
+    thesisID INT REFERENCES thesis(thesisID),
+    comID INT,
+    comment varchar(255)
+);
+CREATE TABLE rate(
+    thesisID INT PRIMARY KEY,
+    comID INT,
+    rate INT,
+    date date
+);

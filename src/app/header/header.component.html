@@ -1,0 +1,13 @@
+
+<nav class="navbar navbar-inverse fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="#">PTES</a> 
+    <ul class="nav navbar-nav navbar-right" *ngIf="service.isLoggedIn">
+      <li class="nav-item"><a class="nav-link">Welcome</a> </li>
+      <li class="nav-item"><a class="nav-link" routerLink="update" routerLinkActive="active">{{service.loginUserName}}</a></li>
+      <li class="nav-item"><a class="nav-link" href="#" (click)="service.logout()">Logout</a></li>
+    </ul>
+
+  </div>
+</nav>  
+

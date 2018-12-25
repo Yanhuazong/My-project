@@ -1,0 +1,33 @@
+.content{
+    padding: 60px 16px;
+    height: 100%;
+}
+.title{
+    color:teal;
+    text-align:center;
+    margin-top:50px;
+}
+.form-container{
+    margin:50px 20px;
+}
+form{
+    padding:4vh;
+    max-width:500px;
+    margin:auto;
+    border-radius:20px;
+    box-shadow: 0 0 30px #AFADAD;
+}
+label{
+    color:teal;
+}
+input[type=password],input[type=email]{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
+}
+#error{
+    color:red;
+}

@@ -1,0 +1,62 @@
+ <div class="body">
+ <form #formData='ngForm' (ngSubmit)="createItem(formData)">
+      <input type="text" ngModel name="itemname" id="itemname" #itemname="ngModel" style="width:25em" required>
+      <input type="submit" [disabled]="!formData.valid" value="Add a category">
+  </form>
+  <ul class="items">
+      <li *ngFor="let item of items">
+        <a (click)="edit(item)"  class="item">
+          <span style="font-weight:bold;">Category &nbsp;</span>
+          <span *ngIf="item!==editItem" style="margin-left:6px;">{{item.itemName}}</span>
+          <input *ngIf="item===editItem" [(ngModel)]="item.itemName"
+            (blur)="update()" (keyup.enter)="update()">
+        </a>
+        <button class="delete" title="delete item"
+        (click)="delete(item)">x</button>
+      
+        <ol class="attributes">
+          <div class="addAttribute">
+            <input #attributeName required style="width:25em;top:0em;margin-right:1em;"/>
+                <!-- (click) passes input value to add() and then clears the input -->
+            <button (click)="add(item.itemID,attributeName.value); attributeName.value=''">
+              Add an attribute
+            </button>
+          </div>
+          <li *ngFor="let attribute of attributes; let i=index " [hidden]="attribute.itemID!==item.itemID">
+            
+            <a (click)="editAttr(attribute)">
+              <span *ngIf="attribute!==editattribute">{{attribute.attribute}}</span>
+              <input *ngIf="attribute===editattribute" [(ngModel)]="attribute.attribute"
+                (blur)="updateAttr()" (keyup.enter)="updateAttr()" style="width:25em;">
+            </a>
+            <button class="deleteAttr" title="delete attribute"
+            (click)="deleteAttr(attribute)">x</button>
+              <ul class="options">
+                <label>Option:</label>
+                  <input #optionName required style="width:15em;top:0em;margin-right:1em;margin-left:0.5em;"/>
+                  <label>Rank of this option:</label>
+                  <input #rank required style="width:5em;top:0em;margin-left:0.5em;margin-right:1em;" />
+                
+                <!-- (click) passes input value to add() and then clears the input -->
+                <button (click)="createOption(attribute.attributeID,optionName.value,rank.value); optionName.value='';rank.value=''">
+                  Add
+                </button>
+                <li *ngFor="let option of options" [hidden]="option.attributeID!==attribute.attributeID">
+                  
+                  <a (click)="editOption(option)"style="line-height:0.8;margin-bottom:-1em;">
+                    <span *ngIf="option!==editoption" class="optionName">{{option.optionName}}</span>
+                    <input *ngIf="option===editoption" [(ngModel)]="option.optionName"
+                      (blur)="updateOption()" (keyup.enter)="updateOption()" style="width:15em;margin-right:5em;top:0.5em;">
+                    <span class="optionRank" *ngIf="option!==editoption">{{option.rank}}</span>
+                    <input *ngIf="option===editoption" [(ngModel)]="option.rank"
+                      (blur)="updateRank()" (keyup.enter)="updateRank()" style="width:5em;top:0.5em;">
+                  </a>
+                  <button class="deleteOption" title="delete option"
+                  (click)="deleteOption(option)">x</button>                
+                </li>      
+              </ul>          
+          </li>
+        </ol>
+      </li>
+    </ul>
+  </div> 

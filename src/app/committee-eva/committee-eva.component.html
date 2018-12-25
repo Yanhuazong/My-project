@@ -1,0 +1,178 @@
+<div class="content">
+    <button type="button" class="btn btn-warning" (click)="gotoLists()">Back to the list</button>
+    <div class="content-container"  *ngIf="!isReviewFinished">
+        <form #formData='ngForm'>
+            <ul class="items">
+                <li *ngFor="let item of items">
+                    <div class="title">{{item.itemName}}</div>
+                    <ol class="attributes">
+                        <li *ngFor="let attribute of attributes" [hidden]="attribute.itemID!==item.itemID">
+                        {{attribute.attribute}}
+                            <ul class="options">
+                                <li *ngFor="let option of options | sort: 'rank'" [hidden]="option.attributeID!==attribute.attributeID">
+                                    <input type="radio" name="selectedoption-{{attribute.attributeID}}" #selectedoption (change)="onSelectionChange(option, attribute, item)" required>&nbsp;{{option.optionName}}
+                                </li>
+                            </ul>
+                        </li>
+                    </ol>
+                    <div>
+                        <label class="strong">Overall rating for this category</label>
+                        <input name="rate-{{item.itemID}}"  ngModel id="rate" #rate="ngModel" type="range" min="1" max="5" steps="1" value="3" (change)="getRate(item,rate.value)">
+                        <div class="rangelabel">
+                            <span class="left">1</span>
+                            <span class="middle">3</span>
+                            <span class="right">5</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="strong">Comments:</label><br/>
+                        <textarea #comments name="comments-{{item.itemID}}" rows="3" (blur)="getComments(comments,item)" style="width:100%;" (keyup.enter)="getComments(comments,item)"></textarea>
+                    </div>
+                </li>
+            </ul>   
+            <div>
+                <div class="title">Overall rating of this thesis</div>
+                <div class="strong">Please rate this thesis overally on a scale of 5: </div>
+                <input name="finalRate"  ngModel id="finalRate" #finalRate="ngModel" type="range" min="1" max="5" steps="1" value="3" (change)="getFinalRate(finalRate.value)">
+                <div class="rangelabel">
+                    <span class="left">1</span>
+                    <span class="middle">3</span>
+                    <span class="right">5</span>
+                </div>
+            </div>
+            <label class="alert">
+            <input type="submit" value="submit" [disabled]="!formData.valid" (click)="onClick();">       
+                Be careful! Answers cannot be changed after submission.
+            </label>
+        </form>
+    </div>
+    <div class="content-container" *ngIf="isReviewFinished">
+        <h2>Results from you</h2>
+        <ul class="items">
+            <li *ngFor="let item of thisItems">
+              <div class="title">{{item}}</div>
+              <ol class="attributes">
+                <li *ngFor="let result of loadedThisComEvaResults; let i = index" [hidden]="result.itemName!==item">
+                  {{result.attributeName}}<br/>
+                  <span style="font-weight:normal;">{{result.optionSelected}}</span>
+                </li>
+              </ol>
+              <ul class="options">
+                  <li *ngFor="let comment of loadedThisComEvaComments">
+                    <div *ngIf="comment.itemName===item" >
+                        <label class="strong">Overall rating for this category</label><br/>
+                        <input name="rate-{{item}}" style="width:100%;" type="range" min="1" max="5" steps="1" value="{{comment.rate}}" style="width:100%;margin-top:30px;" disabled>
+                        <div class="rangelabel">
+                            <span class="left">1</span>
+                            <span class="middle">3</span>
+                            <span class="right">5</span>
+                        </div>
+                    </div>
+                    <div *ngIf="comment.itemName===item">
+                        <div  class="strong">Comments:</div>
+                        <div class="comment">{{comment.comment}}</div>
+                    </div>
+                </li>
+            </ul>
+            </li>
+        </ul>
+        <div>
+            <div class="title">Overall rating of this thesis</div>
+            <div class="strong">Your rating of this thesis on a scale of 5: </div>
+            <input name="thisfinalRate" style="width:100%;" type="range" min="1" max="5" steps="1" value="{{loadedThisComFinalRate.rate}}" style="width:100%;margin-top:30px;" disabled>
+            <div class="rangelabel">
+                <span class="left">1</span>
+                <span class="middle">3</span>
+                <span class="right">5</span>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="thesis&&thesis.comChairID===comID">
+        <div class="refresh">
+            <button *ngIf="!noRefresh" (click)="getEvaOptions();getEvaComments();getFinalRates();">Get evaluation results from the other committee members</button>
+        </div>
+        <div class="content-container" *ngIf="isOtherComReviewFinished">
+            <h2>Results from other committee members</h2>
+            <ul class="items">
+                <li *ngFor="let item of thisItems">
+                  <div class="title">{{item}}</div>
+                  <ol class="attributes">
+                      <li *ngFor="let result of loadedThisComEvaResults" [hidden]="result.itemName!==item">
+                          {{result.attributeName}}
+                          <ul class="options">
+                                <li *ngFor="let otherResult of loadedOtherComEvaResults">
+                                    <span style="font-weight:normal;" *ngIf="otherResult.attributeName===result.attributeName">{{otherResult.optionSelected}}</span>                
+                                </li>
+                          </ul>
+                      </li>
+                  </ol>
+                  <ul class="options">
+                        <div class="ratingLabel">Average rating for this category</div>
+                        <li *ngFor="let avgRate of avgRates">
+                            <div *ngIf="avgRate.itemName===item" >
+                                <input name="rate-{{item}}" style="width:100%;" type="range" min="1" max="5" steps="1" value="{{avgRate.avgRate}}" style="width:100%;margin-top:30px;" disabled>
+                                <div class="rangelabel">
+                                    <span class="left">1</span>
+                                    <span class="middle">3</span>
+                                    <span class="right">5</span>
+                                </div>
+                            </div>
+                        </li>
+                        <div class="ratingLabel">Comments:</div>
+                        <div class="comment-otherCommittee">
+                            <ul class="options">
+                                <li *ngFor="let comment of loadedOtherComEvaComments">
+                                    <div *ngIf="comment.itemName===item" >
+                                        {{comment.comment}}
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                  </ul>
+                </li>
+            </ul>
+            <div class="finalRate">
+                <div class="title">Average overall rating of this thesis</div>
+                <div class="strong">The average rating of this thesis from the other committee members on a scale of 5: </div>
+                <input name="thisfinalRate"  style="width:100%;" type="range" min="1" max="5" steps="1" value="{{avgFinalRate}}" style="width:100%;margin-top:30px;" disabled>
+                <div class="rangelabel">
+                    <span class="left">1</span>
+                    <span class="middle">3</span>
+                    <span class="right">5</span>
+                </div>
+            </div>
+        </div>
+        <div class="content-container" *ngIf="isReadyForFinalReview">
+            <div *ngIf="!thesis.grade" style="margin-top:30px;">
+                <form #formData='ngForm'>
+                    <label style="font-weight:bold">Thesis Grade:</label>&nbsp;
+                    <select name="grade" ngModel id="grade" #grade="ngModel" style="width:100%;" (change)="getGrade(grade)" required>
+                            <option value="" disabled>Choose a Grade</option>
+                            <option value="S">S-Satisfactory</option>
+                            <option value="U">U-Unsatisfactory</option>
+                            <option value="SI">SI-Incomplete</option>
+                            <option value="IU">IU-Unremoved Incomplete - Unsatisfactory</option>
+                            <option value="WU">WU-Withdrew Unsatisfactory</option>
+                    </select>
+                    <label class="strong">Please give comment based on all committees' evaluation results:</label>
+                    <textarea #final name="final" ngModel style="width:100%;" rows="3" (blur)="getFinalResult(final)" (keyup.enter)="getFinalResult(final)" required></textarea>
+                    <label *ngIf="!isSubmit" class="alert">
+                    <input *ngIf="!isSubmit" type="submit" value="submit" [disabled]="!formData.valid" (click)="onSubmit();">                    
+                    Be careful! Answers cannot be changed after submission.
+                    </label>
+                </form>
+                <div *ngIf="isSubmit">Evaluation results successfully submitted!</div>
+            </div>
+            <div *ngIf="thesis.grade">
+                <h2>Final Result</h2>
+                <div class="content-container">
+                    <span class="strong"> Grade: </span>{{thesis.grade}} <br/>
+                    <div class="strong">Comments: </div>
+                    <div class="comment">
+                        {{thesis.evaComment}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>  
+</div>

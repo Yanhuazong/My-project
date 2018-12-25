@@ -1,0 +1,90 @@
+<div class="content">
+  <div *ngIf="isThesisUploaded;else upload" class="upload">
+    <h3>Your thesis:</h3>
+    <ul>
+        <li *ngFor="let thesis of thisThesis">
+            <ul>
+                <li><span class="badge">Thesis title:</span>
+                    <span  *ngIf="!editThesis">{{thesis.thesisTitle}}</span>
+                    <input type="text" *ngIf="editThesis" [(ngModel)]="thesis.thesisTitle" required>
+                </li>
+                <li><span class="badge">Committee Chair:</span>
+                <span *ngIf="!editThesis">{{thesis.comChairFirstName}}&nbsp;{{thesis.comChairLastName}}</span>
+                <select *ngIf="editThesis" [(ngModel)] ="thesis.comChairID" id="comChairID" class="form-control" (ngModelChange)="getComChair($event);thesis.comChairID=$event.userID;thesis.comChairFirstName=$event.firstName;thesis.comChairLastName=$event.lastName" required>
+                    <option *ngFor="let faculty of faculties" [ngValue]="faculty">
+                        {{ faculty.firstName }}&nbsp;{{ faculty.lastName }}
+                    </option>
+                </select>
+                </li>
+                <li><span class="badge">Committee Member 1:</span>
+                <span *ngIf="!editThesis">{{thesis.comMember1FirstName}}&nbsp;{{thesis.comMember1LastName}}</span>
+                <select *ngIf="editThesis" [(ngModel)]="thesis.comMember1ID" id="comMember1ID" class="form-control" (ngModelChange)="getComMember1($event);thesis.comMember1ID=$event.userID;thesis.comMember1FirstName=$event.firstName;thesis.comMember1LastName=$event.lastName" required>
+                    <option *ngFor="let faculty of facultiesForMem1" [ngValue]="faculty">
+                        {{ faculty.firstName }}&nbsp;{{ faculty.lastName }}
+                    </option>
+                </select> 
+                </li>
+                <li><span class="badge">Committee Member 2:</span>
+                <span *ngIf="!editThesis">{{thesis.comMember2FirstName}}&nbsp;{{thesis.comMember2LastName}}</span>
+                <select *ngIf="editThesis" [(ngModel)]="thesis.comMember2ID" id="comMember2ID" class="form-control" (ngModelChange)="thesis.comMember2ID=$event.userID;thesis.comMember2FirstName=$event.firstName;thesis.comMember2LastName=$event.lastName" required>
+                    <option *ngFor="let faculty of facultiesForMem2" [ngValue]="faculty">
+                        {{ faculty.firstName }}&nbsp;{{ faculty.lastName }}
+                    </option>
+                </select> 
+                </li>
+                <li><span class="badge">Defense Date:</span>
+                    <span  *ngIf="!editThesis">{{thesis.defenseDate}}</span>
+                    <input type="date" *ngIf="editThesis" [(ngModel)]="thesis.defenseDate" required>
+                </li>
+            </ul>
+            <button (click)="onClick(thesis)" *ngIf="!editThesis&&!thesis.grade">Edit</button><button (click)="update()" *ngIf="editThesis">Update</button>
+        </li>  
+    </ul>
+    
+  </div>
+    <ng-template #upload>
+      <h3>Please select you committee members</h3>
+    <form #formData='ngForm' (ngSubmit)="createThesis(formData)">
+      <label for="thesisTitle">Thesis Title</label>
+      <input type="text" ngModel name="thesisTitle" id="thesisTitle" #thesisTitle="ngModel" required>
+      <label for="comChair">Select your committee chair</label>
+      <select name="comChair" id="comChair" class="form-control" ngModel #comChair="ngModel" (ngModelChange)="getComChair($event)" required>
+          <option *ngFor="let faculty of faculties" [ngValue]="faculty">
+              {{ faculty.firstName }}&nbsp;{{ faculty.lastName }}
+          </option>
+      </select> 
+      <label for="comMember1">Select your committee member one</label>
+      <select name="comMember1" id="comMember1" class="form-control" ngModel #comMember1="ngModel" (ngModelChange)="getComMember1($event)" required>
+          <option *ngFor="let faculty of facultiesForMem1" [ngValue]="faculty">
+              {{ faculty.firstName }}&nbsp;{{ faculty.lastName }}
+          </option>
+      </select> 
+      <label for="comMember2">Select your committee member two</label>
+      <select name="comMember2" id="comMember2" class="form-control" ngModel #comMember2="ngModel" required>
+          <option *ngFor="let faculty of facultiesForMem2" [ngValue]="faculty">
+              {{ faculty.firstName }}&nbsp;{{ faculty.lastName }}
+          </option>
+      </select> 
+      <label for="defenseDate">Defense Date</label>
+      <input type="date" ngModel name="defenseDate" id="defenseDate" #defenseDate="ngModel" required>
+      <input type="submit" [disabled]="!formData.valid" value="submit">
+    </form>
+  </ng-template>
+  <!-- <div class="upload">
+    <h3>Your proposal defense results</h3>
+  </div> -->
+  <div class="upload" *ngIf="isThesisUploaded">
+      <h3>Your thesis defense results:</h3>
+      <ul>
+            <li *ngFor="let thesis of thisThesis">
+                <div *ngIf="thesis.grade">
+                    <span class="strong">Grade: </span>{{thesis.grade}}<br/>
+                    <span class="strong">Comments: </span>{{thesis.evaComment}}
+                </div>
+                <div *ngIf="!thesis.grade">
+                    Your thesis evaluation is not done yet.
+                </div>
+            </li>
+        </ul>
+  </div>
+<div>

@@ -1,0 +1,62 @@
+.content{
+    padding: 60px 16px;
+    height: 100%;
+}
+form{
+    max-width:500px;
+    margin:auto;
+}
+input[type=text],[type=date]{
+    width: 100%;
+    padding: 6px 16px;
+    border: 1px solid #ccc;
+    margin: 3px;
+    resize: vertical;
+}
+select{
+    width: 100%;
+    border: 1px solid #ccc;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    resize: vertical;
+}
+input[type=submit]{
+    padding: 6px;
+    margin-top: 6px;
+    margin-bottom: 1px;
+    cursor:pointer;
+}
+label{
+    margin-bottom:0;
+   color:teal;
+}
+.upload{
+    margin:auto;
+    max-width:600px;
+    padding:3vh;
+    border:1px solid #BDBABA;
+    margin-top:3vh;
+}
+span{
+    margin: 3px;
+}
+h3{
+    text-align:center;
+    padding:2vh;
+    margin:auto;
+    color:teal;
+}
+ul{
+    list-style-type: none;
+    padding:0;
+}
+button{
+    margin-top:1em;
+  }
+.badge{
+    color:teal;
+    font-size:16px;
+}
+.strong{
+    font-weight:bold;
+}

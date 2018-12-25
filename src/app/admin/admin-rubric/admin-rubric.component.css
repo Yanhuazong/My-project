@@ -1,0 +1,154 @@
+
+form{
+    width:40em;
+    margin:2em auto;
+}
+.addAttribute{
+  width:46em;
+  margin:1em auto;
+}
+form input{
+    margin:0.5em;
+}
+.items {
+    margin: 2em auto;
+    list-style-type: none;
+    padding: 0;
+    width: 60em;
+}
+.items li {
+  position: relative;
+  cursor: pointer;
+  margin: .5em;
+  padding: .3em;
+  height:100%;
+  border-radius: 4px;
+  box-shadow: 0 0 20px #AFADAD;
+  width: 60em;
+}
+.items input {
+  position: relative;
+  top: -3px;
+  width: 30em;
+}
+.items li:hover {
+  color: #607D8B;
+  background-color: #DDD;
+  left: .1em;
+}
+
+.items a {
+  color:white;
+  text-decoration: none;
+  position: relative;
+  display: block;
+  
+}
+.attributes{
+  list-style-position: inside;
+}
+.attributes a {
+  color:black;
+}
+.items a:hover {
+  color:#607D8B;
+}
+.item{
+  background-color:#95bb7b;
+  padding:4px;
+} 
+.items .badge {
+  display: inline-block;
+  font-size: small;
+  color: white;
+  background-color: #607D8B;
+  line-height: 1em;
+  position: relative;
+  left: -1px;
+  top: -4px;
+  height: 1.8em;
+  min-width: 16px;
+  text-align: right;
+  margin-right: .8em;
+  border-radius: 4px 0 0 4px;
+}
+button.delete {
+  position: relative;
+  background-color: gray !important;
+  color: white;
+  display: inherit;
+  width: 2em;
+  cursor:pointer;
+  left: 57.4em;
+  top: -32.1px;
+}
+.attributes{
+    position:relative;
+    left:2em;
+}
+.attributes li {
+  position: relative;
+  cursor: pointer;
+  margin: .5em;
+  padding: .3em;
+  height:100%;
+  border-radius: 4px;
+  width: 45em;
+}
+.attributes li:hover {
+  color: #607D8B;
+  background-color: #EBE7B4;
+  left: .1em;
+}
+.attributes a{
+  display:inline-block;
+}
+button.deleteAttr {
+  position: relative;
+  color: #615F5F;
+  background-color: #A09C9C;
+  display: inherit;
+  width: 2em;
+  cursor:pointer;
+  left: 42.5em;
+  top: -30px;
+}
+.options{
+  position:relative;
+}
+.options li{
+  position:relative;
+  cursor: pointer;
+  margin: .5em;
+  padding: .3em;
+  height:50%;
+  line-height:0.5;
+  border-radius: 4px;
+  box-shadow: 0 0 0px #AFADAD;
+  width: 35em;
+  vertical-align: middle;
+}
+.optionName{
+  position:relative;
+  top:5px;
+  margin-right:1em;
+  width:28em;
+  display:inline-block;
+}
+.optionRank{
+  position:relative;
+  top:5px;
+}
+.options li:hover{
+  background-color: #B3CEB2;
+}
+button.deleteOption {
+  position: relative;
+  color: gray;
+  display: inherit;
+  width: 2em;
+  height:2em;
+  cursor:pointer;
+  left: 32.5em;
+  top: -10px;
+}

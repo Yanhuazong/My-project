@@ -1,0 +1,49 @@
+h3{
+    padding-top:5vh;
+    padding-bottom:2vh;
+    font-size:3vh;
+    color:#22374F;
+    text-align:center;
+}
+form{
+    max-width:500px;
+    margin:auto;
+}
+input[type=text], input[type=password],input[type=email], select{
+    width: 100%;
+    padding: 1px;
+    border: 1px solid #ccc;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    resize: vertical;
+}
+input[type=submit]{
+    padding: 1px;
+    margin-top: 6px;
+    margin-bottom: 1px;
+    cursor:pointer;
+}
+label{
+    margin-bottom:0;
+}
+button.delete {
+    position: relative;
+    background-color: gray !important;
+    color: white;
+    display: inherit;
+    width: 2em;
+    cursor:pointer;
+}
+table{
+    text-align:center;
+    margin:auto;
+}
+th{
+    background-color: #EEE;
+    margin: 1vh;
+    padding: 1vh;
+    resize: vertical;
+}
+span{
+    padding:1vh;
+}
